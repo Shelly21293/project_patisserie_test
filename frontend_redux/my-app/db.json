@@ -1,0 +1,79 @@
+{
+  "products": [
+    {
+      "desc": "milk",
+      "price": "55",
+      "id": 1
+    },
+    {
+      "desc": "lechem",
+      "price": "65",
+      "id": 3
+    },
+    {
+      "desc": "sogar",
+      "price": "34",
+      "id": 4
+    },
+    {
+      "desc": "SVP",
+      "price": "5500$",
+      "id": 5
+    }
+  ],
+  "customerCart": [
+    {
+      "desc": "lechem",
+      "price": "65",
+      "id": 1
+    },
+    {
+      "desc": "sogar",
+      "price": "34",
+      "id": 2
+    },
+    {
+      "desc": "milk",
+      "price": "55",
+      "id": 3
+    }
+  ],
+  "finalCart": [
+    [
+      {
+        "desc": "lechem",
+        "price": "65",
+        "id": 1
+      },
+      {
+        "desc": "sogar",
+        "price": "34",
+        "id": 2
+      }
+    ],
+    [
+      {
+        "desc": "lechem",
+        "price": "65",
+        "id": 1
+      }
+    ],
+    [
+      {
+        "desc": "lechem",
+        "price": "65",
+        "id": 1
+      },
+      {
+        "desc": "sogar",
+        "price": "34",
+        "id": 2
+      },
+      {
+        "desc": "milk",
+        "price": "55",
+        "id": 3
+      }
+    ]
+  ]
+}
