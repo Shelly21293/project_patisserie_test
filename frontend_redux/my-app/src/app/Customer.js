@@ -18,7 +18,7 @@ export function Customer() {
 
 
   return (
-    <div>
+    <div style={{backgroundColor:"violet"}}>
       <h1>Customer GUI</h1>
 
       {prodList.map((prod) => (

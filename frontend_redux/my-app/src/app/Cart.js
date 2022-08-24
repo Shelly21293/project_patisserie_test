@@ -17,7 +17,7 @@ export function Cart() {
 
 
   return (
-    <div>
+    <div style={{backgroundColor:"yellow"}}>
       <h1>Cart GUI</h1>
 
       {prodList.map((prod) => (

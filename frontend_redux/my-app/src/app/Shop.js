@@ -15,7 +15,7 @@ export function Shop() {
 
 
   return (
-    <div>
+    <div style={{backgroundColor:"pink"}}>
       <h1>Admin GUI</h1>
       <div>
         Desc:
