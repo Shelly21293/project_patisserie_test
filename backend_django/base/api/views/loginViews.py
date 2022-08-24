@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
 
 
-
+# singin
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -17,6 +17,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add custom claims
         token['username'] = user.username
         token['email'] = user.email
+        token['staff'] = user.is_staff
         # ...
 
         return token
@@ -38,10 +39,10 @@ def getRoutes(request):
 # register/signup
 @api_view(['POST'])
 def register(request):
-    User.objects.create_user(username= request.data["username"],email=request.data["email"],password=request.data["password"])
-    print( request.data["username"])
-    print( request.data["email"])
-    print(request.data["password"])
+    User.objects.create_user(username= request.data["username"],email=request.data["email"],password=request.data["password"],is_staff=request.data["staff"])
+    # print( request.data["username"])
+    # print( request.data["email"])
+    # print(request.data["password"])
     return Response("Registration done")
 
 
