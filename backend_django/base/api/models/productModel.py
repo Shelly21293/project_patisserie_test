@@ -6,7 +6,7 @@ from .categoryModel import Category
 
 class Product(models.Model):
     _id=models.AutoField(primary_key=True,editable=False)
-    # category_id= models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    category_id= models.ForeignKey(Category, on_delete=models.CASCADE, null=False, blank=False)
     desc = models.CharField(max_length=50,null=True,blank=True)
     price = models.DecimalField(max_digits=4,decimal_places=0,default=0)
     image = models.ImageField(null=True,blank=True,default='/placeholder.png')
@@ -14,4 +14,4 @@ class Product(models.Model):
     
     # fields =['_id','desc','price']
     def __str__(self):
-     	     	return {self._id}
+     	return {self._id}

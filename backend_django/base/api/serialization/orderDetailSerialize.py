@@ -1,8 +1,8 @@
-from rest_framework import serializers
-from api.models.orderDetailModel import OrderDetail
+from rest_framework.serializers import ModelSerializer
+from ..models.orderDetailModel import OrderDetail
 
 
-class OrderDetailSerializer(serializers.ModelSerializer):
+class OrderDetailSerializer(ModelSerializer):
     class Meta:
         model = OrderDetail
         fields = '__all__'

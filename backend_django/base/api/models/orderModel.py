@@ -7,8 +7,7 @@ from django.contrib.auth.models import User
 
 class Order(models.Model):
     _id=models.AutoField(primary_key=True,editable=False)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    # orderDetail_id= models.ForeignKey(OrderDetail, on_delete=models.CASCADE, null=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=False,blank=False)
     createdTime=models.DateTimeField(auto_now_add=True)
     
     # fields =['_id','desc','price']

@@ -14,85 +14,68 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 @api_view(['GET'])
 def getProducts(request, id=0):
     if int(id) > 0:  # return single prod -READ
-        prod = Product.objects.get(_id=id)
-        serializer = productSerialize.ProductSerializer().getProduct(prod)
-        return JsonResponse(serializer, safe=False)
+        prod = Product.objects.filter(_id=id)
     else:  # get All -READ
-        products = Product.objects.all()
-        serializer = []
-        for prod in products:
-            serializer.append(
-                productSerialize.ProductSerializer().getProduct(prod))
-        return Response(serializer)
-    #    if int(id) > 0:  # return single prod -READ
-    #     prod = Product.objects.get(_id=id)
-    #     res = productSerialize.ProductSerializer().getProduct(prod)
-    #     return JsonResponse(res, safe=False)
-    # else:  # get All -READ
-    #     res = []
-    #     for prod in Product.objects.all():
-    #         res.append(
-    #             productSerialize.ProductSerializer().getProduct(prod))
-    #     return JsonResponse(res, safe=False)
+        prod = Product.objects.all()
+    serializer = productSerialize.ProductSerializer(prod, many=True)      
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getProductsPerCategoty(request, cat_id=0):
+    prod = Product.objects.filter(category_id_id=int(cat_id))
+    serializer = productSerialize.ProductSerializer(prod, many=True)      
+    return Response(serializer.data)
+    
+ 
 
 # Admin
-@api_view(['GET', 'POST', 'DELETE', 'PUT'])
-@permission_classes([IsAuthenticated])
-def products(request, id=0):
-    if request.method == "GET":  # create
-        # user = request.user
-        # print(request.user)
-        # products = user.product_set.all()
-        products = Product.objects.all()
-        serializer = productSerialize.ProductSerializer(products, many=True)
-        return Response(serializer.data)
+# create
+@api_view(['POST']) 
+@permission_classes([IsAdminUser])
+def addProduct(request):
+    serializer = productSerialize.ProductSerializer(data=request.data)  
+    if( serializer.is_valid()):
+        serializer.save()
+    else:
+        return Response("product was not saved, check data")
+    return Response("Product added")
 
-    if request.method == "POST":  # create
-        Product.objects.create(
-            desc=request.data["desc"], price=request.data["price"])
-        return Response("Product added")
 
-    if request.method == "DELETE":  # delete
+# delete
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteProduct(request, id=0):
+    if int(id) > 0: 
         prod = Product.objects.get(_id=id)
         prod.delete()
         return Response("Product deleted")
+    else:
+        return Response("Product to delete was not selected")
 
-    if request.method == "PUT":  # UPDATE
+# UPDATE
+@api_view(['PATCH'])
+@permission_classes([IsAdminUser])
+def updateProduct(request, id=0):
+    
+    if int(id) > 0:
         prod = Product.objects.get(_id=id)
-        prod.desc = request.data["desc"]
-        prod.price = request.data["price"]
+        # print(prod)
+        if "category_id" in request.data:
+            prod.category_id=request.data["category_id"]
+        
+        if "desc" in request.data:
+            prod.desc=request.data["desc"]
+
+        if "price" in request.data:
+            prod.price=request.data["price"]
+        
+        if "image" in request.data:
+            prod.image=request.data["image"]
+
         prod.save()
+        
         return Response("Product updated")
+    else: 
+        return Response("Product to update was not selected")
 
 
-# LOAN
-# @api_view(['GET', 'POST', 'DELETE', 'PUT'])
-# def loans(request, id=0):
-#     if request.method == "GET":
-#         if int(id) > 0:  # return single loan -READ
-#             loan = Loan.objects.get(_id=id)
-#             res = loanSerialize.LoanSerializer().getLoan(loan)
-#             return JsonResponse(res, safe=False)
-#         else:  # get All -READ
-#             res = []
-#             for loan in Loan.objects.all():
-#                 res.append(categorySerialize.LoanSerializer().getLoan(loan))
-#             return JsonResponse(res, safe=False)
-
-#     if request.method == "POST":  # create
-#         customer = User.objects.get(id=request.data["customer"])
-#         book = Book.objects.get(_id=request.data["book"])
-#         Loan.objects.create(customer=customer, book=book)
-#         return JsonResponse({'test': request.method})
-
-#     if request.method == "DELETE":  # delete
-#         loan = Loan.objects.get(_id=id)
-#         loan.delete()
-#         return JsonResponse({'test': request.method})
-
-#     if request.method == "PUT":  # UPDATE
-#         loan = Loan.objects.get(_id=id)
-#         loan.customer = User.objects.get(id=request.data["customer"])
-#         loan.book = Book.objects.get(_id=request.data["book"])
-#         loan.save()
-#         return JsonResponse({'test': request.method})

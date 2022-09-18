@@ -1,3 +1,4 @@
+from email.policy import default
 from django.http import JsonResponse
 from rest_framework import permissions
 from rest_framework.response import Response
@@ -6,6 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
+
 
 
 # singin
@@ -18,6 +21,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
         token['email'] = user.email
         token['staff'] = user.is_staff
+        token['admin'] = user.is_superuser
         # ...
 
         return token
@@ -25,6 +29,26 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+
+# register/signup
+@api_view(['POST'])
+def register(request):
+    User.objects.create_user(username= request.data["username"],email=request.data["email"],password=request.data["password"],is_superuser=request.data["admin"],is_staff=request.data["staff"])
+    # print( request.data["username"])
+    # print( request.data["email"])
+    # print(request.data["password"])
+    return Response("Registration done")
+
+
+# Logout
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def myLogout(request):
+    logout(request)
+    return Response("logged out")
+
+
 
 
 @api_view(['GET'])
@@ -35,37 +59,3 @@ def getRoutes(request):
     ]
 
     return Response(routes)
-
-# register/signup
-@api_view(['POST'])
-def register(request):
-    User.objects.create_user(username= request.data["username"],email=request.data["email"],password=request.data["password"],is_staff=request.data["staff"])
-    # print( request.data["username"])
-    # print( request.data["email"])
-    # print(request.data["password"])
-    return Response("Registration done")
-
-
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def getNotes(request):
-#     print("innnn")
-#     user = request.user
-#     print(user)
-#     notes = user.note_set.all()
-#     print(user.note_set)
-#     print(notes)
-#     serializer = NoteSerializer(notes, many=True)
-#     return Response(serializer.data)
-
-
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def getOneNote(request):
-#     user = request.user
-#     print(user)
-#     notes = user.note_set.all()
-#     ps = user.pita_set.all()
-#     print(ps)
-#     serializer = NoteSerializer(notes, many=True)
-#     return Response(serializer.data)

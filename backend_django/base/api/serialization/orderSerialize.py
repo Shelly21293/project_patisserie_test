@@ -1,8 +1,8 @@
-from rest_framework import serializers
-from api.models.orderModel import Order
+from rest_framework.serializers import ModelSerializer
+from ..models.orderModel import Order
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderSerializer(ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
@@ -11,7 +11,6 @@ class OrderSerializer(serializers.ModelSerializer):
         return {
                 "id":obj._id,
                 "user_id":obj.user._id,
-                "orderDetail_id":obj.orderDetail._id,
                 "createdTime":obj.createdTime,
             }
 
