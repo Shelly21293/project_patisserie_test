@@ -5,25 +5,29 @@ import { Outlet, Link } from "react-router-dom";
 const NavBar = () => {
     return (
         <div>
-            <div className="w3-top">
-                <div className="w3-row w3-padding w3-black">
-                    <div className="w3-col s3">
 
-                        <a href="#" className="w3-button w3-block w3-black">HOME</a>
-                    </div>
-                    <div className="w3-col s3">
-                    {/* <Link className="w3-button w3-block w3-black" to="/about">ABOUT</Link> */}
-                        <a href="/about" className="w3-button w3-block w3-black">ABOUT</a>
-                    </div>
-                    <div className="w3-col s3">
-                        <a href="#menu" className="w3-button w3-block w3-black">MENU</a>
-                    </div>
-                    <div className="w3-col s3">
-                        <Link className="w3-button w3-block w3-black" to="/login">Login\Register</Link>
-                        {/* <a href="/login" className="w3-button w3-block w3-black">Login\Register</a> */}
-                    </div>
-                </div>
-            </div>
+            <nav className="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+                {/* <div className="container-fluid"> */}
+                <ul className="navbar-nav ">
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/">HOME</Link>
+
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/about">ABOUT</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link " to="/menu">MENU</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link " to="/login">Login\Register</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link " to="/where">WHERE</Link>
+                    </li>
+                </ul>
+                {/* </div> */}
+            </nav>
         </div>
     )
 }

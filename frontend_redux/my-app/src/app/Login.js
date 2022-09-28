@@ -15,7 +15,8 @@ export const Login = () => {
     const [staff, setStaff] = useState(false);
 
     return (
-    <div style={{backgroundColor:"green"}}>
+      <div class="w3-sand w3-grayscale w3-large">
+    {/* // <div style={{backgroundColor:"green"}}> */}
       {/* for presentation */}
        
         {userName && <div>Welcome {userName} ! Are you defined as staff? {isStaff ? "Yes" : "No, work harder"} </div>}

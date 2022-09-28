@@ -62,6 +62,7 @@ urlpatterns = [
 
 
     # path('deleteOrders/', orderViews.deleteOrders), *to active in case need to delete ALL orders
+    path('deleteorder/', orderViews.deleteOrder),
     path('deleteorder/<id>', orderViews.deleteOrder),
 
     

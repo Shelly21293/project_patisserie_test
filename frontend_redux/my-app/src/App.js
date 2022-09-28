@@ -4,7 +4,6 @@ import './App.css';
 import NavBar from './NavBar'
 import Header from './Header'
 import Footer from './Footer'
-import About from './About'
 
 import { Login } from './app/Login'
 import { Shop } from './app/Shop';
@@ -16,20 +15,36 @@ import { Cart } from './app/Cart'
 function App() {
   return (
     <div className="App">
-      {/* <!-- Add a background color and large text to the whole page --> */}
-      {/* <div class="w3-sand w3-grayscale w3-large">
-        <NavBar></NavBar>
-
-
-
+      <div style={{backgroundColor:'#fffae6'}}>
         <Header></Header>
 
+        <NavBar></NavBar>
         <Outlet></Outlet>
         <Footer></Footer>
-        <About></About>
-      </div> */}
 
-      <Login />
+      </div>
+
+
+
+
+
+
+      {/* <!-- Add a background color and large text to the whole page --> */}
+      {/* <Header></Header>
+      <NavBar></NavBar>
+
+
+
+
+      <div className="w3-sand w3-grayscale w3-large">
+        <div className="container mt-5">
+          {/* <Outlet></Outlet> */}
+      {/* <LoginPage></LoginPage>
+          <Footer></Footer>
+        </div> */}
+      {/* // </div> */}
+
+      {/* <Login />
       <hr />
       <Shop />
       <hr />
@@ -37,7 +52,7 @@ function App() {
       <hr />
 
       {/* GUI only- all methods from customer */}
-      <Cart />
+      {/* <Cart /> */}
     </div>
   );
 }

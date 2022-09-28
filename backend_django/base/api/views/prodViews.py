@@ -61,7 +61,7 @@ def updateProduct(request, id=0):
         prod = Product.objects.get(_id=id)
         # print(prod)
         if "category_id" in request.data:
-            prod.category_id=request.data["category_id"]
+            prod.category_id= Category.objects.get(_id= request.data["category_id"])
         
         if "desc" in request.data:
             prod.desc=request.data["desc"]

@@ -36,8 +36,11 @@ def addOrder(request):
     order= request.data
     user = request.user
     new_order_id= Order.objects.create(user_id=user)
-
+    print(order)
     for x in order:
+        # print(x)
+        # product_id=x["product_id"]
+        # print(product_id)
         prod_id=Product.objects.get(_id=x["product_id"])
         # category_id=Category.objects.get(_id=x["category_id"])
         quantity=x["quantity"]
@@ -71,12 +74,11 @@ def deleteOrder(request, id=0):
     if int(id) > 0:
         order = Order.objects.get(_id=id)
         order.delete()
-        orderDetails=OrderDetail.objects.get(order_id=id)
-        for x in orderDetails:
-            x.delete()
         return Response("Order deleted")
     else:
-        return Response("Order to delete was not selected")
+        order = Order.objects.all()
+        order.delete()
+        return Response("All orders has been deleted")
 
 @api_view(['PATCH'])
 @permission_classes([IsAdminUser])

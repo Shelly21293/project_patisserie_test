@@ -11,9 +11,7 @@ class OrderDetail(models.Model):
     _id=models.AutoField(primary_key=True,editable=False)
     order_id = models.ForeignKey(Order, on_delete=models.CASCADE, null=False,blank=False)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE, null=False,blank=False)
-    # category_id= models.ForeignKey(Category, on_delete=models.CASCADE, null=False,blank=False)
     quantity = models.DecimalField(max_digits=2,decimal_places=0,default=0)
     
-    # fields =['_id','desc','price']
     def __str__(self):
      	return {self._id}

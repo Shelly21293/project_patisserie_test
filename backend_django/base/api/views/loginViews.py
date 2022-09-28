@@ -34,7 +34,12 @@ class MyTokenObtainPairView(TokenObtainPairView):
 # register/signup
 @api_view(['POST'])
 def register(request):
-    User.objects.create_user(username= request.data["username"],email=request.data["email"],password=request.data["password"],is_superuser=request.data["admin"],is_staff=request.data["staff"])
+    try:
+        is_admin= request.data["admin"]
+    except:
+        is_admin=0
+    print(is_admin)
+    User.objects.create_user(username= request.data["username"],email=request.data["email"],password=request.data["password"],is_superuser=is_admin,is_staff=request.data["staff"])
     # print( request.data["username"])
     # print( request.data["email"])
     # print(request.data["password"])
