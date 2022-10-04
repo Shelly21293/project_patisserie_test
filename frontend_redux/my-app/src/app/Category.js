@@ -8,7 +8,7 @@ import { selectCategoryList, getCategoryAsync } from './categorySlice'
 const Category = () => {
   const dispatch = useDispatch();
   const categories = useSelector(selectCategoryList);
-
+  // console.log(categories)
 
   useEffect(() => {
     dispatch(getCategoryAsync())
@@ -22,12 +22,12 @@ const Category = () => {
       <ul className="nav nav-pills flex-column">
         <li className="nav-item">
           {categories.map((cat) => (
-            <Link className="nav-link" key={cat._id} to="/getcategory/${cat._id}">{cat.desc}</Link>
+            
+            <Link className="nav-link" key={cat._id} to={`/menu/category/${cat._id}`}>{cat.desc}{" "}</Link>
           ))}
         </li>
       </ul>
       {/* <hr className="d-sm-none" /> */}
-
     </div>
   )
 }

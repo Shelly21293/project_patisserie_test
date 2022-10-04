@@ -22,9 +22,13 @@ def getProducts(request, id=0):
 
 @api_view(['GET'])
 def getProductsPerCategoty(request, cat_id=0):
-    prod = Product.objects.filter(category_id_id=int(cat_id))
+    if int(cat_id) > 0:  # return prods per category -READ
+        prod = Product.objects.filter(category_id_id=int(cat_id))
+    else:  # get All prods -READ
+        prod = Product.objects.all()
     serializer = productSerialize.ProductSerializer(prod, many=True)      
     return Response(serializer.data)
+ 
     
  
 

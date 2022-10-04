@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getData,addData,delData, updData } from './shopAPI';
+import { getData,addData,delData, updData } from './productAPI';
 
 const initialState = {
   prodList:[],
@@ -8,28 +8,28 @@ const initialState = {
 };
 
 // Async methodes
-export const getDataAsync = createAsyncThunk('shop/getData',async () => {
+export const getProductAsync = createAsyncThunk('product/getData',async () => {
     const response = await getData();
     // console.log(response.data);
     return response.data;
   }
 );
 
-export const addDataAsync = createAsyncThunk('shop/addData',async (newData) => {
+export const addProductAsync = createAsyncThunk('product/addData',async (newData) => {
     const response = await addData(newData);
     // console.log(response.data);
     return response.data;
   }
 );
 
-export const delDataAsync = createAsyncThunk('shop/delData',async (id) => {
+export const delProductAsync = createAsyncThunk('product/delData',async (id) => {
     const response = await delData(id);
     // console.log(response)
     return id;
   }
 );
 
-export const updDataAsync = createAsyncThunk('shop/updData',async (newData) => {
+export const updProductAsync = createAsyncThunk('product/updData',async (newData) => {
   const response = await updData(newData, newData.id);
   // console.log(response.data);
   return response.data;
@@ -37,9 +37,9 @@ export const updDataAsync = createAsyncThunk('shop/updData',async (newData) => {
 );
 
 
-// shop method
-export const shopSlice = createSlice({
-  name: 'shop',
+// product method
+export const productSlice = createSlice({
+  name: 'product',
   initialState,
   reducers: {
       },
@@ -47,22 +47,22 @@ export const shopSlice = createSlice({
   extraReducers: (builder) => {
     builder
       
-      .addCase(getDataAsync.fulfilled, (state, action) => {
+      .addCase(getProductAsync.fulfilled, (state, action) => {
         state.status = 'Done';
-        // console.log(action.payload);
+        console.log(action.payload);
         state.prodList =action.payload;
       },)
-      .addCase(addDataAsync.fulfilled, (state, action) => {
+      .addCase(addProductAsync.fulfilled, (state, action) => {
         state.status = 'Done';
         // console.log(action.payload);
         state.prodList =[...state.prodList,action.payload];
       },)
-      .addCase(delDataAsync.fulfilled, (state, action) => {
+      .addCase(delProductAsync.fulfilled, (state, action) => {
         state.status = 'Done';
         // console.log(action.payload);
         state.prodList = state.prodList.filter((x) => x.id !== action.payload);
       },)
-      .addCase(updDataAsync.fulfilled, (state, action) => {
+      .addCase(updProductAsync.fulfilled, (state, action) => {
         state.status = 'Done';
         // console.log(action.payload);
         let updProd = state.prodList.find((x) => x.id === action.payload.id);
@@ -77,6 +77,6 @@ export const shopSlice = createSlice({
 
 
 // selctors to export
-export const selectProdList = (state) => state.shop.prodList;
+export const selectProdList = (state) => state.product.prodList;
 
-export default shopSlice.reducer;
+export default productSlice.reducer;

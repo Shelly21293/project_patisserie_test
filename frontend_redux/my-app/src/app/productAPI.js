@@ -2,13 +2,14 @@
 import axios from "axios";
 
 
-const SERVER_URL="http://localhost:3005/products/"
+const SERVER_URL_GET_PER_CAT="http://127.0.0.1:8000/api/getproductspercat/"
+const SERVER_URL="http://127.0.0.1:8000/api/getproduct/"
 
 
 
 export function getData() {
   return new Promise((resolve) =>
-  axios(SERVER_URL).then((res) => resolve({ data: res.data })),
+  axios(SERVER_URL_GET_PER_CAT).then((res) => resolve({ data: res.data })),
   );
 }
 

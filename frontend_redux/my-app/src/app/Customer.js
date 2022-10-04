@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getDataAsync, selectProdList } from './shopSlice';
+import { getProductAsync, selectProdList } from './productSlice';
 import {addDataAsync} from './customerSlice'
 // import styles from './Counter.module.css';
 
@@ -13,7 +13,7 @@ export function Customer() {
 
 
   useEffect(() => {
-    dispatch(getDataAsync());
+    dispatch(getProductAsync());
   }, []);
 
 

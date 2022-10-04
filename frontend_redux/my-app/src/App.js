@@ -6,7 +6,7 @@ import Header from './Header'
 import Footer from './Footer'
 
 import { Login } from './app/Login'
-import { Shop } from './app/Shop';
+// import { Shop } from './app/Shop';
 import { Customer } from './app/Customer';
 import { Cart } from './app/Cart'
 

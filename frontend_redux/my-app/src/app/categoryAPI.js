@@ -2,13 +2,13 @@
 import axios from "axios";
 
 
-const SERVER_URL = "http://localhost:8000/api/getcategories/"
+const SERVER_URL_GET = "http://127.0.0.1:8000/api/getcategories/"
 
 
 
 export function getData() {
   return new Promise((resolve) =>
-  axios(SERVER_URL).then((res) => resolve({ data: res.data })),
+  axios(SERVER_URL_GET).then((res) => resolve({ data: res.data })),
   );
 }
 

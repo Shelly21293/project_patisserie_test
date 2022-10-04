@@ -10,6 +10,9 @@ import About from './About'
 import Home from './Home';
 import Menu from './Menu'
 import Where from './Where';
+import Category from './app/Category';
+import Product from './app/Product'
+
 const container = document.getElementById('root');
 const root = createRoot(container);
 
@@ -27,9 +30,10 @@ root.render(
             <Route path="/about" element={<About />} />
             <Route path="/where" element={<Where />} />
             <Route path="/menu" element={<Menu />} />
-            {/* <Route path="/categories" element={<Category />} >
-                        <Route path=":id" element={<Products />} />
-                    </Route> */}
+            <Route path="/menu/product" element={<Product />} />
+            <Route path="/menu/category" element={<Category />} >
+                        {/* <Route path=":id" element={<ProductPerCat />} /> */}
+                    </Route>
           </Route>
         </Routes>
 

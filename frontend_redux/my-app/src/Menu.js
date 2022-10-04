@@ -1,20 +1,29 @@
 import React from 'react'
-import Menu_L_side from './Menu_L_side'
+import Product from './app/Product'
+import Product_card from './app/Product_card'
+
 import Category from './app/Category'
+import { Outlet } from 'react-router-dom'
 
 const Menu = () => {
     return (
-        <div>
+        <div style={{ width: "fixed", height: "fixed"}}>
 
 
             <div className="container mt-5">
                 <div className="row">
                     <div className="col-sm-2">
                         <Category></Category>
+
+
                     </div>
                     <div className="col-sm-10">
-                        <Menu_L_side></Menu_L_side>
+                        {/* <Product_card></Product_card> */}
+                        <Product></Product>
+
+
                     </div>
+                    {/* <Outlet></Outlet> */}
 
                 </div>
             </div>

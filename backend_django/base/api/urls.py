@@ -23,8 +23,9 @@ urlpatterns = [
 
     # prod route's
     path('getproducts/', prodViews.getProducts),
-    path('getproduct/<id>', prodViews.getProducts),
+    path('getproducts/<id>', prodViews.getProducts),
 
+    path('getproductspercat/', prodViews.getProductsPerCategoty),
     path('getproductspercat/<cat_id>', prodViews.getProductsPerCategoty),
 
     path('addproduct/', prodViews.addProduct),
@@ -37,7 +38,7 @@ urlpatterns = [
 
     # Category route's
     path('getcategories/', categoryViews.getCategories),
-    path('getcategory/<id>', categoryViews.getCategories),
+    path('getcategories/<id>', categoryViews.getCategories),
 
     path('addcategory/', categoryViews.addCategory),
 
