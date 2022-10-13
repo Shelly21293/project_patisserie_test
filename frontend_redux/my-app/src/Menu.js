@@ -3,6 +3,7 @@ import Product from './app/Product'
 import Product_card from './app/Product_card'
 
 import Category from './app/Category'
+import Cartwindow from './app/Cartwindow'
 import { Outlet } from 'react-router-dom'
 
 const Menu = () => {
@@ -20,10 +21,10 @@ const Menu = () => {
                     <div className="col-sm-10">
                         {/* <Product_card></Product_card> */}
                         <Product></Product>
+                        {/* <Cartwindow></Cartwindow> */}
 
 
                     </div>
-                    {/* <Outlet></Outlet> */}
 
                 </div>
             </div>

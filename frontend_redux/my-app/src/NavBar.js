@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet, Link } from "react-router-dom";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 
 const NavBar = () => {
@@ -23,7 +24,7 @@ const NavBar = () => {
                         <Link className="nav-link " to="/login">Login\Register</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link " to="/where">WHERE</Link>
+                        <Link className="nav-link " to="/cart">MyCart</Link>
                     </li>
                 </ul>
                 {/* </div> */}

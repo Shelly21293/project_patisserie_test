@@ -22,13 +22,20 @@ const Category = () => {
       <ul className="nav nav-pills flex-column">
         <li className="nav-item">
           {categories.map((cat) => (
-            
+
             <Link className="nav-link" key={cat._id} to={`/menu/category/${cat._id}`}>{cat.desc}{" "}</Link>
           ))}
         </li>
       </ul>
       {/* <hr className="d-sm-none" /> */}
+      {/* <Outlet></Outlet> */}
+
+      <div>
+      <Outlet></Outlet>
+      </div>
+
     </div>
+
   )
 }
 

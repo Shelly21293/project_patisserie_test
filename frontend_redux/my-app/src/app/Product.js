@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Outlet, Link, NavLink } from "react-router-dom";
 import { getProductAsync, addProductAsync, delProductAsync, selectProdList, updProductAsync } from './productSlice';
+import { CartToSend } from './orderSlice'
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -37,6 +38,7 @@ const ExpandMore = styled((props) => {
 export function Product() {
   let params = useParams();
   let cat_id = params.id;
+  const [myCart, setmyCart] = useState([])
   const prodList = useSelector(selectProdList);
   const dispatch = useDispatch();
   const [desc, setDesc] = useState("");
@@ -45,17 +47,25 @@ export function Product() {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  console.log(prodList)
-  // //run every time we switch category
-  // useEffect(() => {
-  //   dispatch(getDataAsync(cat_id));
-  // }, [cat_id]);
+
+  //run every time we switch category
   useEffect(() => {
-    dispatch(getProductAsync())
+    dispatch(getProductAsync(cat_id));
+  }, [cat_id]);
+
+  //run every time we open menu page
+  useEffect(() => {
+    dispatch(getProductAsync(0))
 
   }, [])
 
+  const addToCart = (item) => {
 
+    setmyCart([...myCart, item])
+    console.table(myCart)
+    localStorage.setItem("myCart", JSON.stringify(myCart))
+    dispatch(CartToSend(myCart))
+  }
   return (
     <div style={{ backgroundColor: "#fffae6" }}>
       <h3 className="mt-4"><i>Our Products</i></h3>
@@ -65,6 +75,7 @@ export function Product() {
 
         {prodList.map((prod) => (
           <div >
+
             {/* Desc: {prod.desc} {", "} Price: {prod.price} */}
             <Card sx={{ maxWidth: 345 }} >
               <CardHeader
@@ -79,7 +90,7 @@ export function Product() {
                 //   </IconButton>
                 // }
                 title=<i>{prod.desc}</i>
-                // subheader={prod.price}
+              // subheader={prod.price}
               />
               <CardMedia
                 component="img"
@@ -89,17 +100,18 @@ export function Product() {
               <CardHeader
                 subheader={prod.price}
               />
-              <IconButton color="primary" aria-label="add to shopping cart">
+              <IconButton color="primary" aria-label="add to shopping cart" onClick={() => addToCart({ _id: prod._id, desc: prod.desc, price: prod.price, amount: 1 })}>
                 Add to cart<AddShoppingCartIcon />
               </IconButton>
               {/* <CardActions disableSpacing>
               </CardActions> */}
 
 
-            </Card></div>))}
+            </Card>
+          </div>))}
       </ImageList>
     </div>
-    
+
   );
 }
 

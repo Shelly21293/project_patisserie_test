@@ -7,9 +7,9 @@ const SERVER_URL="http://127.0.0.1:8000/api/getproduct/"
 
 
 
-export function getData() {
+export function getData(cat_id) {
   return new Promise((resolve) =>
-  axios(SERVER_URL_GET_PER_CAT).then((res) => resolve({ data: res.data })),
+  axios(SERVER_URL_GET_PER_CAT + cat_id).then((res) => resolve({ data: res.data })),
   );
 }
 

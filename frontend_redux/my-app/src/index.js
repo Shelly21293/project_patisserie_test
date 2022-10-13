@@ -9,7 +9,8 @@ import { Login } from './app/Login'
 import About from './About'
 import Home from './Home';
 import Menu from './Menu'
-import Where from './Where';
+import Cartwindow from './app/Cartwindow';
+import Cart from './app/Cart';
 import Category from './app/Category';
 import Product from './app/Product'
 
@@ -28,12 +29,13 @@ root.render(
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/about" element={<About />} />
-            <Route path="/where" element={<Where />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/menu/product" element={<Product />} />
             <Route path="/menu/category" element={<Category />} >
-                        {/* <Route path=":id" element={<ProductPerCat />} /> */}
-                    </Route>
+              <Route path=":id" element={<Product />} />
+            </Route>
+            
           </Route>
         </Routes>
 

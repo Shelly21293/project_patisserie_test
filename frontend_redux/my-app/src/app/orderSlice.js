@@ -1,35 +1,36 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addData } from './cartAPI';
+import { addData } from './orderAPI';
 
 const initialState = {
-  cartList:[],
+  orderList:[],
+  myCart:[],
   value: 0,
   status: 'idle',
 };
 
 // Async methodes
-// export const getDataAsync = createAsyncThunk('cart/getData',async () => {
+// export const getDataAsync = createAsyncThunk('order/getData',async () => {
 //     const response = await getData();
 //     // console.log(response.data);
 //     return response.data;
 //   }
 // );
 
-export const addDataAsync = createAsyncThunk('cart/addData',async (newData) => {
+export const addDataAsync = createAsyncThunk('order/addData',async (newData) => {
     const response = await addData(newData);
     // console.log(response.data);
     return response.data;
   }
 );
 
-// export const delDataAsync = createAsyncThunk('cart/delData',async (id) => {
+// export const delDataAsync = createAsyncThunk('order/delData',async (id) => {
 //     const response = await delData(id);
 //     // console.log(response)
 //     return id;
 //   }
 // );
 
-// export const updDataAsync = createAsyncThunk('shop/updData',async (newData) => {
+// export const updDataAsync = createAsyncThunk('order/updData',async (newData) => {
 //   const response = await updData(newData, newData.id);
 //   // console.log(response.data);
 //   return response.data;
@@ -38,10 +39,17 @@ export const addDataAsync = createAsyncThunk('cart/addData',async (newData) => {
 
 
 // cart method
-export const cartSlice = createSlice({
-  name: 'cart',
+export const orderSlice = createSlice({
+  name: 'order',
   initialState,
   reducers: {
+    CartToSend:(state,action)=>{
+      console.log("bef")
+      console.log(action.payload)
+      state.myCart=action.payload
+      console.log(state.myCart)
+      console.log("aft")
+  }
       },
 
   extraReducers: (builder) => {
@@ -74,10 +82,11 @@ export const cartSlice = createSlice({
 });
 
 // methods to export
-// export const {  } = shopSlice.actions;
+export const { CartToSend } = orderSlice.actions;
 
 
 // selctors to export
-export const selectCartList = (state) => state.cart.cartList;
+export const selectMyOrder = (state) => state.order.myCart;
+export const selectOrderList = (state) => state.order.orderList;
 
-export default cartSlice.reducer;
+export default orderSlice.reducer;
