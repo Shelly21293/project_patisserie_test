@@ -3,7 +3,6 @@ import { addData } from './orderAPI';
 
 const initialState = {
   orderList:[],
-  myCart:[],
   value: 0,
   status: 'idle',
 };
@@ -43,13 +42,7 @@ export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    CartToSend:(state,action)=>{
-      console.log("bef")
-      console.log(action.payload)
-      state.myCart=action.payload
-      console.log(state.myCart)
-      console.log("aft")
-  }
+ 
       },
 
   extraReducers: (builder) => {
@@ -82,11 +75,11 @@ export const orderSlice = createSlice({
 });
 
 // methods to export
-export const { CartToSend } = orderSlice.actions;
+// export const { CartToSend } = orderSlice.actions;
 
 
 // selctors to export
-export const selectMyOrder = (state) => state.order.myCart;
+// export const selectMyOrder = (state) => state.order.myCart;
 export const selectOrderList = (state) => state.order.orderList;
 
 export default orderSlice.reducer;

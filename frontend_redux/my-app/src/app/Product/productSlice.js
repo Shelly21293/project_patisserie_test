@@ -30,7 +30,8 @@ export const delProductAsync = createAsyncThunk('product/delData',async (id) => 
 );
 
 export const updProductAsync = createAsyncThunk('product/updData',async (newData) => {
-  const response = await updData(newData, newData.id);
+    console.log(newData);
+  const response = await updData(newData.update, newData.id, newData.token);
   // console.log(response.data);
   return response.data;
 }
@@ -64,10 +65,10 @@ export const productSlice = createSlice({
       },)
       .addCase(updProductAsync.fulfilled, (state, action) => {
         state.status = 'Done';
-        // console.log(action.payload);
-        let updProd = state.prodList.find((x) => x.id === action.payload.id);
-        updProd.desc = action.payload.desc;
-        updProd.price = action.payload.price;
+        console.log(action);
+        // let updProd = state.prodList.find((x) => x.id === action.payload.id);
+        // updProd.desc = action.payload.desc;
+        // updProd.price = action.payload.price;
       },);
   },
 });

@@ -3,8 +3,9 @@ import axios from "axios";
 
 
 const SERVER_URL_GET_PER_CAT="http://127.0.0.1:8000/api/getproductspercat/"
-const SERVER_URL="http://127.0.0.1:8000/api/getproduct/"
-
+const SERVER_URL_GET="http://127.0.0.1:8000/api/getproduct/"
+const SERVER_URL_UPD="http://127.0.0.1:8000/api/updateproduct/"
+const SERVER_URL="http://127.0.0.1:8000/api/updateproduct/"
 
 
 export function getData(cat_id) {
@@ -27,8 +28,12 @@ export const delData = (id) => {
   );
 };
 
-export function updData(newData,id) {
+export function updData(newData,id,token) {
   return new Promise((resolve) =>
-    axios.put(SERVER_URL +id, newData).then((res) => resolve({ data: res.data }))
+    axios.patch(SERVER_URL_UPD +id, newData,{
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  }).then((res) => resolve({ data: res.data }))
   );
 }

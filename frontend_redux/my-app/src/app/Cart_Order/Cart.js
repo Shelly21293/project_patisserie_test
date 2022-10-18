@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCustomerProdList, getDataAsync, delDataAsync } from './customerSlice';
-import { addDataAsync, selectCartList } from './orderSlice';
-import { selectMyOrder, CartToSend } from './orderSlice'
+import { selectCustomerProdList, getDataAsync, delDataAsync } from '../customerSlice';
+import { addDataAsync, selectCartList } from './cartSlice';
+import { selectMyCart,CartToSend } from './cartSlice'
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -29,8 +29,8 @@ export function Cart() {
   const prodList = useSelector(selectCustomerProdList);
   // prodList name can be changed
   const dispatch = useDispatch();
-  // const myCart = useSelector(selectMyOrder);
-  const [myCart, setmyCart] = useState([])
+  // const myCart = useSelector(selectMyCart);
+  const [myCart, setmyCart] = useState(useSelector(selectMyCart))
 
   // run when component load- need to delete when runnung first time
     useEffect(() => {
@@ -40,7 +40,17 @@ export function Cart() {
   // useEffect(() => {
   //   dispatch(getDataAsync());
   // }, []);
+  const DelFromCart = async(id) => {
 
+    await setmyCart(myCart.filter(x => x._id !== id))
+    dispatch(CartToSend(myCart.filter(x => x._id !== id)))
+    console.table(myCart.filter(x => x._id !== id))
+    console.table(myCart)
+    
+    localStorage.setItem("myCart", JSON.stringify(myCart.filter(x => x._id !== id)))
+    console.table(myCart)
+    
+  }
 
   return (
     <div style={{ backgroundColor: "#fffae6" }}>
@@ -49,7 +59,7 @@ export function Cart() {
 
       <ImageList sx={{ width: "fixed", height: "fixed" }} cols={3} gap={12}>
 
-        {myCart.map((prod) => (
+        {myCart && myCart.map((prod) => (
           <div >
 
             {/* Desc: {prod.desc} {", "} Price: {prod.price} */}
@@ -71,12 +81,12 @@ export function Cart() {
               <CardMedia
                 component="img"
                 height="194"
-                image={prod.img}
+                image={prod.image}
               />
               <CardHeader
                 subheader={prod.price}
               />
-              <IconButton color="primary" aria-label="remove from cart" >
+              <IconButton color="primary" aria-label="remove from cart"  onClick={() => DelFromCart(prod._id)}>
                 Remove
               </IconButton>
               {/* <CardActions disableSpacing>

@@ -1,9 +1,12 @@
 import React from 'react'
 import { Outlet, Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import {selectUserName,selectToken, selectStaff} from './app/Login/loginSlice'
 
 
 const NavBar = () => {
+    const isStaff= useSelector(selectStaff);
     return (
         <div>
 
@@ -26,6 +29,9 @@ const NavBar = () => {
                     <li className="nav-item">
                         <Link className="nav-link " to="/cart">MyCart</Link>
                     </li>
+                    {isStaff && <li className="nav-item">
+                        <Link className="nav-link " to="/staffGUI">STAFF GUI</Link>
+                    </li>}
                 </ul>
                 {/* </div> */}
             </nav>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Outlet, Link, NavLink } from "react-router-dom";
 import { getProductAsync, addProductAsync, delProductAsync, selectProdList, updProductAsync } from './productSlice';
-import { CartToSend } from './orderSlice'
+import { CartToSend } from '../Cart_Order/cartSlice'
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -41,31 +41,47 @@ export function Product() {
   const [myCart, setmyCart] = useState([])
   const prodList = useSelector(selectProdList);
   const dispatch = useDispatch();
-  const [desc, setDesc] = useState("");
-  const [price, setPrice] = useState(0);
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  //run every time we switch category
-  useEffect(() => {
-    dispatch(getProductAsync(cat_id));
-  }, [cat_id]);
-
   //run every time we open menu page
   useEffect(() => {
     dispatch(getProductAsync(0))
-
   }, [])
 
-  const addToCart = (item) => {
+  //run every time we switch category
+  useEffect(() => {
+    if (cat_id) {
+    dispatch(getProductAsync(cat_id));}
+  }, [cat_id]);
 
-    setmyCart([...myCart, item])
-    console.table(myCart)
-    localStorage.setItem("myCart", JSON.stringify(myCart))
+  // run when component load- need to delete when runnung first time
+  useEffect(() => {
+    if (localStorage.getItem("myCart"))
+    setmyCart(JSON.parse( localStorage.getItem("myCart") ))
+  }, [])
+
+
+  const addToCart = async(item) => {
+
+    let stam= await setmyCart([...myCart, item])
+    // console.table(myCart)
     dispatch(CartToSend(myCart))
+    localStorage.setItem("myCart", JSON.stringify(myCart))
+    
   }
+
+  const clearCart = () => {
+
+    setmyCart([])
+    console.table(myCart)
+    dispatch(CartToSend())
+    localStorage.clear()
+    
+  }
+
   return (
     <div style={{ backgroundColor: "#fffae6" }}>
       <h3 className="mt-4"><i>Our Products</i></h3>
@@ -75,8 +91,6 @@ export function Product() {
 
         {prodList.map((prod) => (
           <div >
-
-            {/* Desc: {prod.desc} {", "} Price: {prod.price} */}
             <Card sx={{ maxWidth: 345 }} >
               <CardHeader
                 // avatar={
@@ -95,12 +109,12 @@ export function Product() {
               <CardMedia
                 component="img"
                 height="194"
-                image={prod.img}
+                image={prod.image}
               />
               <CardHeader
                 subheader={prod.price}
               />
-              <IconButton color="primary" aria-label="add to shopping cart" onClick={() => addToCart({ _id: prod._id, desc: prod.desc, price: prod.price, amount: 1 })}>
+              <IconButton color="primary" aria-label="add to shopping cart" onClick={() => addToCart({ _id: prod._id, desc: prod.desc, price: prod.price, image:prod.image, amount: 1 })}>
                 Add to cart<AddShoppingCartIcon />
               </IconButton>
               {/* <CardActions disableSpacing>
@@ -110,6 +124,8 @@ export function Product() {
             </Card>
           </div>))}
       </ImageList>
+      <button onClick={() => clearCart([])}>clear cart</button>
+      <button onClick={() => console.table(myCart)}>show cart</button>
     </div>
 
   );

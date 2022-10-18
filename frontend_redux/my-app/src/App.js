@@ -5,21 +5,24 @@ import NavBar from './NavBar'
 import Header from './Header'
 import Footer from './Footer'
 
-import { Login } from './app/Login'
+import { Login } from './app/Login/Login'
 // import { Shop } from './app/Shop';
 import { Customer } from './app/Customer';
-import { Cart } from './app/Order'
+import { Cart } from './app/Cart_Order/Order'
 
 
 
 function App() {
   return (
     <div className="App">
-      <div style={{backgroundColor:'#fffae6'}}>
+      <div style={{ backgroundColor: '#fffae6' }}>
         <Header></Header>
 
         <NavBar></NavBar>
-        <Outlet></Outlet>
+        {/* <div className="container mt-5" style={{ width: "100%", height: "100%"}}> */}
+        <div>
+          <Outlet></Outlet>
+        </div>
         <Footer></Footer>
 
       </div>

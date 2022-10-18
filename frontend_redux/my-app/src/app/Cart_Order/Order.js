@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCustomerProdList, getDataAsync, delDataAsync } from './customerSlice';
+import { selectCustomerProdList, getDataAsync, delDataAsync } from '../customerSlice';
 import { addDataAsync, selectCartList } from './orderSlice';
 
 

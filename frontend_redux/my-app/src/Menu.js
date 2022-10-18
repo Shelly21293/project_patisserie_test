@@ -1,9 +1,9 @@
 import React from 'react'
-import Product from './app/Product'
-import Product_card from './app/Product_card'
+import Product from './app/Product/Product'
+import Product_card from './app/Product/Product_card'
 
-import Category from './app/Category'
-import Cartwindow from './app/Cartwindow'
+import Category from './app/Category/Category'
+import Cartwindow from './app/Cart_Order/Cartwindow'
 import { Outlet } from 'react-router-dom'
 
 const Menu = () => {
