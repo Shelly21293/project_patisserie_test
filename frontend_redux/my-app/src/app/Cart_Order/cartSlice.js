@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  myCart: [],
+  myCart: (JSON.parse(localStorage.getItem("myCart"))) ? (JSON.parse(localStorage.getItem("myCart"))) : ([]),
   id: 0,
   status: 'idle',
 };
@@ -12,18 +12,32 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    CartToSend: (state, action) => {
-      // console.log("bef")
+    addItemToCart: (state, action) => {
       // console.log(action.payload)
-      state.myCart = action.payload
-      console.log("aft")
+      state.myCart = [...state.myCart, action.payload]
       console.log(state.myCart)
+      localStorage.setItem("myCart", JSON.stringify(state.myCart))
 
     },
-    // DelFromCart: (state, action) => {
-    //   console.log("del")
-    //   console.log(action.payload)
-    // }
+    deleteCart: (state, action) => {
+      // console.log(action.payload)
+      state.myCart = ([])
+      console.log(state.myCart)
+      localStorage.clear()
+
+    },
+    removeItemFromCart: (state, action) => {
+      console.log(action.payload)
+      state.myCart = state.myCart.filter(x => x._id !== action.payload)
+      console.log(state.myCart)
+
+      localStorage.setItem("myCart", JSON.stringify(state.myCart))   
+
+    },
+    changeAmount: (state, action) => {
+      console.log("i need to change amount")
+      console.log(action.payload)
+    }
   },
 
   extraReducers: (builder) => {
@@ -32,7 +46,7 @@ export const cartSlice = createSlice({
 });
 
 // methods to export
-export const { CartToSend, DelFromCart } = cartSlice.actions;
+export const { addItemToCart, deleteCart,removeItemFromCart, DelFromCart, changeAmount } = cartSlice.actions;
 
 
 // selctors to export

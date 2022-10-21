@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Outlet, Link, NavLink } from "react-router-dom";
 import { getProductAsync, addProductAsync, delProductAsync, selectProdList, updProductAsync } from './productSlice';
-import { CartToSend } from '../Cart_Order/cartSlice'
+import { addItemToCart, selectMyCart } from '../Cart_Order/cartSlice'
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -38,7 +38,10 @@ const ExpandMore = styled((props) => {
 export function Product() {
   let params = useParams();
   let cat_id = params.id;
-  const [myCart, setmyCart] = useState([])
+  // const [myCart, setmyCart] = useState([])
+
+  const myCart = useSelector(selectMyCart);
+
   const prodList = useSelector(selectProdList);
   const dispatch = useDispatch();
   const [expanded, setExpanded] = React.useState(false);
@@ -58,29 +61,21 @@ export function Product() {
   }, [cat_id]);
 
   // run when component load- need to delete when runnung first time
-  useEffect(() => {
-    if (localStorage.getItem("myCart"))
-    setmyCart(JSON.parse( localStorage.getItem("myCart") ))
-  }, [])
+  // useEffect(() => {
+  //   if (localStorage.getItem("myCart"))
+  //   setmyCart(JSON.parse( localStorage.getItem("myCart") ))
+  // }, [])
 
 
-  const addToCart = async(item) => {
-
-    let stam= await setmyCart([...myCart, item])
-    // console.table(myCart)
-    dispatch(CartToSend(myCart))
-    localStorage.setItem("myCart", JSON.stringify(myCart))
+  // const addToCart = (item) => {   
+  //   // console.log(myCart)
+  //   dispatch(addItemToCart(item))
     
-  }
-
-  const clearCart = () => {
-
-    setmyCart([])
-    console.table(myCart)
-    dispatch(CartToSend())
-    localStorage.clear()
     
-  }
+  // }
+
+
+  
 
   return (
     <div style={{ backgroundColor: "#fffae6" }}>
@@ -114,7 +109,7 @@ export function Product() {
               <CardHeader
                 subheader={prod.price}
               />
-              <IconButton color="primary" aria-label="add to shopping cart" onClick={() => addToCart({ _id: prod._id, desc: prod.desc, price: prod.price, image:prod.image, amount: 1 })}>
+              <IconButton color="primary" aria-label="add to shopping cart" onClick={() =>  dispatch(addItemToCart({ _id: prod._id, desc: prod.desc, price: prod.price, image:prod.image, amount: 1 }))}>
                 Add to cart<AddShoppingCartIcon />
               </IconButton>
               {/* <CardActions disableSpacing>
@@ -124,7 +119,6 @@ export function Product() {
             </Card>
           </div>))}
       </ImageList>
-      <button onClick={() => clearCart([])}>clear cart</button>
       <button onClick={() => console.table(myCart)}>show cart</button>
     </div>
 
@@ -134,40 +128,3 @@ export function Product() {
 export default Product
 
 
-// admin product
-// <div>
-    //   <h3 className="mt-4"><i>Our Products</i></h3>
-    //   {prodList.map((prod) => (
-    //     <div>
-    //       Desc: {prod.desc} {", "} Price: {prod.price}</div>))}
-    //   {/* <h1>Admin GUI</h1>
-    //   // <div>
-    //   //   Desc:
-    //   //   <input onChange={(e) => setDesc(e.target.value)} />
-    //   //   <br />
-    //   //   Price:
-    //   //   <input onChange={(e) => setPrice(e.target.value)} />
-    //   //   <button
-    //   //     onClick={() => dispatch(addDataAsync({ desc: desc, price: price }))}
-    //   //   >
-    //   //     Add Product
-    //   //   </button>
-    //   // </div>
-    //   // <hr />
-    //   // Number of products in shop: {prodList.length}
-    //   // <hr />
-    //   // {prodList.map((prod) => (
-    //   //   <div>
-    //   //     Desc: {prod.desc} {", "} Price: {prod.price}
-    //   //     <button onClick={() => dispatch(delDataAsync(prod.id))}>
-    //   //       Delete
-    //   //     </button>
-
-    //   //     <button onClick={() => dispatch(updDataAsync({
-    //   //       desc: desc,
-    //   //       price: price,
-    //   //       id: prod.id,
-    //   //     }))}>Update</button>
-    //   //   </div>
-    //   //   ))} */}
-    // </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCustomerProdList, getDataAsync, delDataAsync } from '../customerSlice';
 import { addDataAsync, selectCartList } from './cartSlice';
-import { selectMyCart,CartToSend } from './cartSlice'
+import { selectMyCart,addItemToCart, deleteCart,removeItemFromCart } from './cartSlice'
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -29,28 +29,38 @@ export function Cart() {
   const prodList = useSelector(selectCustomerProdList);
   // prodList name can be changed
   const dispatch = useDispatch();
-  // const myCart = useSelector(selectMyCart);
-  const [myCart, setmyCart] = useState(useSelector(selectMyCart))
+  const myCart = useSelector(selectMyCart);
+  // const [myCart, setmyCart] = useState(useSelector(selectMyCart))
 
   // run when component load- need to delete when runnung first time
-    useEffect(() => {
-      setmyCart(JSON.parse( localStorage.getItem("myCart") ))
-    }, [])
+    // useEffect(() => {
+    //   setmyCart(JSON.parse( localStorage.getItem("myCart") ))
+    // }, [])
 
   // useEffect(() => {
   //   dispatch(getDataAsync());
   // }, []);
-  const DelFromCart = async(id) => {
+  // const DelFromCart = async(id) => {
 
-    await setmyCart(myCart.filter(x => x._id !== id))
-    dispatch(CartToSend(myCart.filter(x => x._id !== id)))
-    console.table(myCart.filter(x => x._id !== id))
-    console.table(myCart)
+  //   await setmyCart(myCart.filter(x => x._id !== id))
+  //   dispatch(addItemToCart(myCart.filter(x => x._id !== id)))
+  //   console.table(myCart.filter(x => x._id !== id))
+  //   console.table(myCart)
     
-    localStorage.setItem("myCart", JSON.stringify(myCart.filter(x => x._id !== id)))
-    console.table(myCart)
+  //   localStorage.setItem("myCart", JSON.stringify(myCart.filter(x => x._id !== id)))
+  //   console.table(myCart)
     
-  }
+  // }
+
+// const clearCart = async() => {
+
+  //   // await setmyCart([])
+  //   console.table(myCart)
+  //   dispatch(CartToSend())
+  //   // localStorage.setItem("myCart", JSON.stringify())
+  //   localStorage.clear()
+    
+  // }
 
   return (
     <div style={{ backgroundColor: "#fffae6" }}>
@@ -86,7 +96,7 @@ export function Cart() {
               <CardHeader
                 subheader={prod.price}
               />
-              <IconButton color="primary" aria-label="remove from cart"  onClick={() => DelFromCart(prod._id)}>
+              <IconButton color="primary" aria-label="remove from cart"  onClick={() => dispatch(removeItemFromCart(prod._id))}>
                 Remove
               </IconButton>
               {/* <CardActions disableSpacing>
@@ -96,6 +106,8 @@ export function Cart() {
             </Card>
           </div>))}
       </ImageList>
+            <button onClick={() => dispatch(deleteCart())}>clear cart</button>
+
     </div>
     // <div style={{backgroundColor:"yellow"}}>
     //   <h1>Cart GUI</h1>

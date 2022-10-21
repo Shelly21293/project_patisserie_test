@@ -59,26 +59,20 @@ export function Product_Staff_GUI() {
 
   //run every time we switch category
   useEffect(() => {
-    dispatch(getProductAsync(cat_id));
+    if (cat_id) {
+    dispatch(getProductAsync(cat_id));}
   }, [cat_id]);
 
-  useEffect(() => {
-    setmyCart(JSON.parse(localStorage.getItem("myCart")))
-  }, [])
+  // how to perform use effect so each time when the data is updated- we will see it?
+  // useEffect(() => {
+  //   dispatch(getProductAsync(cat_id))
+  // }, [update])
 
 
-  const addToCart = (item) => {
-
-    setmyCart([...myCart, item])
-    console.table(myCart)
-    dispatch(CartToSend(myCart))
-    localStorage.setItem("myCart", JSON.stringify(myCart))
-
-  }
-
-  const Update = (item) =>{
+  const Update = async(item) =>{
     console.log(item)
-    setUpdate({desc: item.desc, price: item.price})
+    await setUpdate({desc: item.desc, price: item.price})
+    console.log(update)
     // UpdateSend({id: item.id, token: item.token})
     dispatch(updProductAsync({ update, id: item.id, token: item.token }))
   }
@@ -126,7 +120,7 @@ export function Product_Staff_GUI() {
                 DELETE
               </IconButton>
               
-              <IconButton color="primary" aria-label="update" onClick={() => Update({ desc: desc, price: price, id: prod._id, token: token })}>
+              <IconButton color="primary" aria-label="update" onClick={() => dispatch(updProductAsync({ desc: desc, price: price, id: prod._id, token: token }))}>
                 UPDATE
               </IconButton>
 

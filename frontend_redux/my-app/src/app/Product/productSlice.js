@@ -31,7 +31,7 @@ export const delProductAsync = createAsyncThunk('product/delData',async (id) => 
 
 export const updProductAsync = createAsyncThunk('product/updData',async (newData) => {
     console.log(newData);
-  const response = await updData(newData.update, newData.id, newData.token);
+  const response = await updData({desc: newData.desc, price: newData.price}, newData.id, newData.token);
   // console.log(response.data);
   return response.data;
 }
